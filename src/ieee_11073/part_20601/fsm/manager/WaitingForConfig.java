@@ -179,9 +179,7 @@ public final class WaitingForConfig extends Configuring {
 			 * The DataApdu and the related structures in A.10 shall use encoding rules
 			 * as negotiated during the association procedure as described in 8.7.3.1.
 			 */
-			processDataApdu(ASN1_Tools.decodeData(prst.getValue(),
-					DataApdu.class,
-					this.state_handler.getMDS().getDeviceConf().getEncondigRules()));
+			processDataApdu(ASN1_Tools.decodeData(prst.getValue(),DataApdu.class,this.state_handler.getMDS().getDeviceConf().getEncondigRules()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Logging.error("Error getting DataApdu encoded with " +

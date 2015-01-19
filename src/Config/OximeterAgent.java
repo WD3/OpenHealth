@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bn.types.BitString;
+import org.bn.utils.ConvertToByteArray;
 
 import es.libresoft.mdnf.SFloatType;
 import es.libresoft.openhealth.DeviceConfig;
@@ -52,8 +53,11 @@ public class OximeterAgent extends Specialization{
 	
 	public static final int MDC_PULS_OXIM_SAT_O2 = 19384;
 	public static final int MDC_DIM_PERCENT = 544;
+	private String id;
+
 	
 	public OximeterAgent(){
+		this.id = id;
 		dev_conf = generateTestDeviceConfig();
 		configdata = new ArrayList<ConfigObject>();
 		configdata.add(generateNumericConfig1());
@@ -72,7 +76,7 @@ public class OximeterAgent extends Specialization{
 		dev_conf.setEncondigRules(AgentConfig.enc_rules);		
 		dev_conf.setNomenclatureVersion(AgentConfig.nomenclature_version);
 		
-		dev_conf.setSystemId(AgentConfig.oximeter_system_id);
+		dev_conf.setSystemId(ConvertToByteArray.getByteArray(id));
 		dev_conf.setSystemType(AgentConfig.system_type);
 		dev_conf.setAssocVersion(AgentConfig.assoc_version);
 		dev_conf.setFunctionalUnits(AgentConfig.functional_units);

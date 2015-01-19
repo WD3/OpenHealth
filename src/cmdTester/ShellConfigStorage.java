@@ -14,6 +14,8 @@ import org.bn.CoderFactory;
 import org.bn.IDecoder;
 import org.bn.IEncoder;
 
+import com.pku.wireless.OnSysIdListener;
+
 import es.libresoft.openhealth.DeviceConfig;
 import es.libresoft.openhealth.storage.ConfigStorage;
 import es.libresoft.openhealth.storage.StorageException;
@@ -81,7 +83,7 @@ public class ShellConfigStorage implements ConfigStorage {
 			FileOutputStream fos = new FileOutputStream(file, false);
 			encoder.encode(data, fos);
 			fos.close();
-
+			onSysIdListener.getSysId(sysid);
 		} catch (Exception e) {
 			throw new StorageException(e);
 		}
@@ -116,4 +118,9 @@ public class ShellConfigStorage implements ConfigStorage {
 			e.printStackTrace();
 		}
 	}
+	private OnSysIdListener onSysIdListener;
+	public void setOnSysIdListener(OnSysIdListener listener){
+		onSysIdListener = listener;
+	}
+	
 }

@@ -54,7 +54,7 @@ public class AgentShell {
 		Logging.debug("Starting CmdAgent.");
 		try {
 			String id = "0010000EEACA0605";
-			TCPAgent tcpAgent = new TCPAgent(new BloodPressureAgentTest(id),"127.0.0.1", 9999);
+			TCPAgent tcpAgent = new TCPAgent(new OximeterAgentTest(id),"127.0.0.1", 9999);
 			tcpAgent.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

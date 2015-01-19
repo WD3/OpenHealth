@@ -38,6 +38,7 @@ import com.pku.wireless.BloodpressureMeasure;
 import com.pku.wireless.MeasureDecoder;
 import com.pku.wireless.MeasureEvent;
 import com.pku.wireless.MeasureListener;
+import com.pku.wireless.OnSysIdListener;
 import com.pku.wireless.OximeterMeasure;
 import com.pku.wireless.PulseMeasure;
 import com.pku.wireless.TCPManager;
@@ -79,6 +80,7 @@ public class ManagerShell {
 
 		Logging.debug("Starting CmdManager.");
 		try {
+			
 			MeasureDecoder.setMeasureListener(new MeasureListener(){
 				@Override
 				public void getBloodMeasure(MeasureEvent event) {
@@ -109,6 +111,14 @@ public class ManagerShell {
 			
 			
 			TCPManager tcpManager = new TCPManager(9999,"E:");
+			tcpManager.setOnSysIdListener(new OnSysIdListener() {
+				
+				@Override
+				public void getSysId(String id) {
+					// TODO Auto-generated method stub
+					System.out.println("SysId: "+id);
+				}
+			});
 			tcpManager.start();
 		} catch (Exception e) {
 			e.printStackTrace();

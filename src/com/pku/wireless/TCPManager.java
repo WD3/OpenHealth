@@ -6,7 +6,6 @@ import java.io.File;
 
 import cmdTester.ShellConfigStorage;
 import cmdTester.ShellMeasureReporter;
-
 import es.libresoft.openhealth.events.InternalEventReporter;
 import es.libresoft.openhealth.events.MeasureReporterFactory;
 import es.libresoft.openhealth.logging.Logging;
@@ -16,10 +15,15 @@ public class TCPManager {
 	private int port;
 	private String fileName;
 	private TcpManagerChannel channelTCP;
+	private String sysId;
+	private OnSysIdListener listener;
 	
 	public TCPManager(int port, String fileName){
 		this.port = port;
 		this.fileName = fileName;
+	}
+	public void setOnSysIdListener(OnSysIdListener listener){
+		this.listener = listener;
 	}
 	public void start(){
 		try {
@@ -34,7 +38,16 @@ public class TCPManager {
 
 			//set ConfigStorage
 			File directory = new File(fileName);
-			ConfigStorageFactory.setDefaultConfigStorage(new ShellConfigStorage(directory.getCanonicalPath()));
+			ShellConfigStorage mShellConfigStorage = new ShellConfigStorage(directory.getCanonicalPath());
+			mShellConfigStorage.setOnSysIdListener(new OnSysIdListener() {
+				
+				@Override
+				public void getSysId(String id) {
+					// TODO Auto-generated method stub
+					listener.getSysId(id);
+				}
+			});
+			ConfigStorageFactory.setDefaultConfigStorage(mShellConfigStorage);
 			
 			/* Start TCP server */
 			channelTCP.start();
@@ -48,6 +61,7 @@ public class TCPManager {
 			e.printStackTrace();
 		}
 	}
+
 	public void finish(){
 		channelTCP.finish();
 	}
